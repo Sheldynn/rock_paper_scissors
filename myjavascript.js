@@ -47,6 +47,7 @@ let userSelection;
 function getUserSelection (input) {
     userSelection = prompt("Please enter Rock, Paper, or Scissors: ");
     console.log("You have selected: " + userSelection);
+}
 
 let userScore = 0;
 let computerScore = 0;
@@ -117,6 +118,5 @@ playRound(userChoice, computerChoice);
                     + "Computer: " + computerScore);
 
     }
-}
-
+} 
 */
