@@ -1,10 +1,5 @@
-// Checking that the external javascript file is successfully linked. 
-console.log("Hello World!");
-console.log("You have to specify the relative path file for an externally linked js file, such as the ./ abbreviation, where the dot represents current directory. Ya Dingus.");
-//Ahh, you live and you learn. 
-
 /* PSEUDOCODE SECTION */
-
+//It turns out that I overcomplicated things a bit here. There's a much simpler way to code this as I've recently learned!
 /*
 My goal is to create a simple program that emulates the Rock-Paper-Scissors game
 via the Console. It will:
@@ -19,115 +14,73 @@ via the Console. It will:
 
 // Get computer choice, randomly
 
- 
-function getRandomNumber (min, max) {
-    return Math.floor(Math.random() * (max - min + 1) ) + min;
-}
+const choices = ["rock", "paper", "scissors"]; //using and array makes sense here for the randomNumber function. 
+// The array has 3 items indexed at 0, 1, & 2, corresponding to: rock, paper, scissors, respectively. 
 
-let computerSelection;
+//Later on, these variables will be used as input for the GUI witin HTML.
+ const playerDisplay = document.getElementById("playerDisplay");
+ const computerDisplay = document.getElementById("computerDisplay");
+ const resultDisplay = document.getElementById("resultDisplay");
 
-function getComputerSelection () { 
-    randomNumber = getRandomNumber(1, 3);
-    if (randomNumber === 1) {
-        computerSelection = "Rock";
-    } else if (randomNumber === 2) {
-        computerSelection = "Paper";
-    } else if (randomNumber === 3) {
-        computerSelection = "Scissors";
-    }
-    console.log(randomNumber);
-    console.log(computerSelection);
-    // randomNumber = Math.floor(Math.random() * 100) + 1;
-}
-
-// Get user input as selection, not case sensitive.
-
-function capitalizeUserSelection(userSelection) {
-    return userSelection
+ /*here, I'll calculate the computer choice within the variable assignment
+ using two call methods to two standard functions within the Math library: floor & random
+ but I will call it within the function so that it resets by itself each iteration 
+ */
+ //This function is to address my ocd for capitalizing the first letter of Rock, Paper, & Scissors, regardless of how the user inputs them. 
+ //Eventually, user input will be based on button clicking anyway, but still. This is satisfying.
+ function capitalizeFirstLetter(choice) {
+    return choice
            .charAt(0)
            .toUpperCase()
-           + userSelection.substr(1)
+           + choice.substr(1)
            .toLowerCase();
         }
 
-let userSelection;
 
-function getUserSelection (input) {
-    userSelection = prompt("Please enter Rock, Paper, or Scissors: ");
-    userSelection = capitalizeUserSelection(userSelection);    
-    if (userSelection != "Rock" && userSelection != "Paper" && userSelection != "Scissors")  {
-        console.log("You have made an invalid selection, try again");
-    } else { console.log("You have selected: " + userSelection); }
+//Here is  a simpler version of writing the playGame function that I found
+//on a YouTube tutorial. God this makes so much more sense...Lol
+
+ let playerChoice;
+ 
+ function playRound(playerChoice) {
+
+    playerChoice = prompt("Please enter rock, paper, or scissors.").toLowerCase();
+    const computerChoice = choices[Math.floor(Math.random() *3)];
+    //this will return a random integer between 0 and 2, corresponding to the string values in the choices array index
+    let result = "";
+    
+    //used this to check that random result works with: console.log(computerChoice);
+
+    if(playerChoice === computerChoice) {
+        result = "It's a draw!";
+    }
+    else {
+        switch(playerChoice) {
+            case "rock":
+                result = (computerChoice === "scissors") ? "You win!" : "You lose!";
+                break;
+            case "paper":
+                result = (computerChoice === "rock") ? "You win!" : "You lose!";
+                break;
+            case "scissors":
+            result = (computerChoice === "paper") ? "You win!" : "You lose!";
+            break;
+        }
+    }
+
+    console.log("Player choice: " + capitalizeFirstLetter(playerChoice) + " | " + "Computer choice: " + capitalizeFirstLetter(computerChoice) + " | " + result);
+
+    /*
+    //Displaying the result of each round.
+    playerDisplay.textContent = `PLAYER: ${playerChoice}`;
+    computerDisplay.textContent = `COMPUTER: ${computerChoice}`;
+    resultDisplay.textContent = result;
+    */
+
 }
 
-let userScore = 0;
-let computerScore = 0;
+// Checking that the external javascript file is successfully linked. 
+console.log("Hello World!");
+console.log("You have to specify the relative path file for an externally linked js file, such as the ./ abbreviation, where the dot represents current directory!");
+//Ahh, you live and you learn. 
 
-function playRound(userSelection, computerSelection) {
-
-    //my code here
-    }
-    const userChoice = getUserSelection; 
-    const computerChoice = getComputerSelection;
-
-
-playRound(userChoice, computerChoice);
-
-
-/* A huge block of code I'm not sure what to do with. 
-
-    
-    if (userChoice === "Rock" && computerChoice === "Scissors") {
-        console.log("You played: " + userChoice + "; the Computer played: " + computerChoice + ". Nice! You win the round.");
-        ++userScore;
-        console.log("Current Score: User:" + userScore
-                    + "Computer: " + computerScore);
-
-    } else if (userChoice === "Rock" && computerChoice === "Paper") {
-        console.log("You played: " + userChoice + "; the Computer played: " + computerChoice + ". Damn! You lost this round.");
-        ++computerScore;
-        console.log("Current Score: User:" + userScore
-                    + "Computer: " + computerScore);
-                    
-    } else if (userChoice === "Rock" && computerChoice === "Rock") {
-        console.log("You both played: " + userChoice + ". Lol, it's a draw.");
-        console.log("Current Score: User:" + userScore
-                    + "Computer: " + computerScore);
-
-    } else if (userChoice === "Scissors" && computerChoice === "Rock") {
-        console.log("You played: " + userChoice + "; the Computer played: " + computerChoice + ". Damn! You lost this round");
-        ++computerScore;
-        console.log("Current Score: User:" + userScore
-                    + "Computer: " + computerScore);
-
-    } else if (userChoice === "Scissors" && computerChoice === "Paper") {
-        console.log("You played: " + userChoice + "; the Computer played: " + computerChoice + ". Nice! You win the round.");
-        ++userScore;
-        console.log("Current Score: User:" + userScore
-                    + "Computer: " + computerScore);
-                    
-    } else if (userChoice === "Scissors" && computerChoice === "Scissors") {
-        console.log("You both played: " + userChoice + ". Lol, it's a draw.");
-        console.log("Current Score: User:" + userScore
-                    + "Computer: " + computerScore);
-
-    } else if (userChoice === "Paper" && computerChoice === "Scissors") {
-        console.log("You played: " + userChoice + "; the Computer played: " + computerChoice + ". Damn! You lost this round");
-        ++computerScore;
-        console.log("Current Score: User:" + userScore
-                    + "Computer: " + computerScore);
-
-    } else if (userChoice === "Paper" && computerChoice === "Rock") {
-        console.log("You played: " + userChoice + "; the Computer played: " + computerChoice + ". Nice! You win the round.");
-        ++userScore;
-        console.log("Current Score: User:" + userScore
-                    + "Computer: " + computerScore);
-                    
-    } else if (userChoice === "Paper" && computerChoice === "Paper") {
-        console.log("You both played: " + userChoice + ". Lol, it's a draw.");
-        console.log("Current Score: User:" + userScore
-                    + "Computer: " + computerScore);
-
-    }
-} 
-*/
