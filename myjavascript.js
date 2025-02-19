@@ -12,9 +12,7 @@ via the Console. It will:
 */
 
 
-// Get computer choice, randomly
 
-const choices = ["rock", "paper", "scissors"]; //using and array makes sense here for the randomNumber function. 
 // The array has 3 items indexed at 0, 1, & 2, corresponding to: rock, paper, scissors, respectively. 
 
 //Later on, these variables will be used as input for the GUI witin HTML.
@@ -28,55 +26,118 @@ const choices = ["rock", "paper", "scissors"]; //using and array makes sense her
  */
  //This function is to address my ocd for capitalizing the first letter of Rock, Paper, & Scissors, regardless of how the user inputs them. 
  //Eventually, user input will be based on button clicking anyway, but still. This is satisfying.
- function capitalizeFirstLetter(choice) {
-    return choice
+ function capitalizeFirstLetter(word) {
+    return word
            .charAt(0)
            .toUpperCase()
-           + choice.substr(1)
+           + word.substr(1)
            .toLowerCase();
         }
+
 
 
 //Here is  a simpler version of writing the playGame function that I found
 //on a YouTube tutorial. God this makes so much more sense...Lol
 
- let playerChoice;
- 
- function playRound(playerChoice) {
+// Get computer choice, randomly
+const choices = ["rock", "paper", "scissors"]; //using and array makes sense here for the randomNumber function.
 
-    playerChoice = prompt("Please enter rock, paper, or scissors.").toLowerCase();
-    const computerChoice = choices[Math.floor(Math.random() *3)];
-    //this will return a random integer between 0 and 2, corresponding to the string values in the choices array index
+function getComputerChoice(choice) {
+    const computerChoice = choices[Math.floor(Math.random() * 3)];
+    return computerChoice;
+
+}
+let playerChoice = "";
+function getPlayerChoice (choice) {
+    playerChoice = prompt("Please enter rock, paper, or scissors.");
+    return playerChoice.toLowerCase();
+
+}
+
+let playerScore=0;
+let computerScore=0;
+
+ function playGame(rounds) {
+    let result = "";
+    let i = 0;
+    while (i < 5) {
+        playRound();
+        console.log("Score: " + playerScore + " vs " + computerScore);
+        i++;
+    }
+    if (playerScore === computerScore) {
+      result = "Your score: " + playerScore + " | " + "Computer score: " + computerScore + ". It's a tie! Lol try again."; 
+      console.log(result); 
+    } else if (playerScore > computerScore) {
+      result = "Your score: " + playerScore + " | " + "Computer score: " + computerScore + ". You win the game!";
+      console.log(result);
+    } else {
+      result = "Your score: " + playerScore + " | " + "Computer score: " + computerScore + ". You lose the game!"
+      console.log(result);
+    }
+
+    playerScore = 0;
+    computerScore = 0;
+    i = 0;
+
+ }
+
+ 
+ function playRound(playerChoice, computerChoice) {
+    const playerSelection = getPlayerChoice();
+    //console.log(playerSelection);
+    const computerSelection = getComputerChoice();
+    //console.log(computerSelection);
     let result = "";
     
-    //used this to check that random result works with: console.log(computerChoice);
-
-    if(playerChoice === computerChoice) {
+    if(playerSelection == computerSelection) {
         result = "It's a draw!";
+        console.log("You: " + playerSelection + " | " + "Computer: " + computerSelection + ". " + result)
+    }
+    else if(playerSelection !== "rock" && playerSelection != "paper" && playerSelection != "scissors") {
+        result = "Invalid selection!";
+        console.log("You: " + playerSelection + " | " + "Computer: " + computerSelection + ". " + result)
     }
     else {
-        switch(playerChoice) {
+        switch(playerSelection) {
             case "rock":
-                result = (computerChoice === "scissors") ? "You win!" : "You lose!";
+                if(computerSelection === "scissors") {
+                    result= "You win the round!";
+                    console.log("You: " + playerSelection + " | " + "Computer: " + computerSelection + ". " + result);
+                    playerScore++;
+                 } else { 
+                    result= "You lose the round!";
+                    console.log("You: " + playerSelection + " | " + "Computer: " + computerSelection + ". " + result);
+                    computerScore++;
+                 }
                 break;
             case "paper":
-                result = (computerChoice === "rock") ? "You win!" : "You lose!";
+                if(computerSelection === "rock") {
+                    result = "You win the round!";
+                    console.log("You: " + playerSelection + " | " + "Computer: " + computerSelection + ". " + result);
+                    playerScore++;
+                } else {
+                    result = "You lose the round!";
+                    console.log("You: " + playerSelection + " | " + "Computer: " + computerSelection + ". " + result);
+                    computerScore++;
+                }
                 break;
             case "scissors":
-            result = (computerChoice === "paper") ? "You win!" : "You lose!";
-            break;
+                if(computerSelection === "paper") {
+                    result = "You win the round!";
+                    console.log("You: " + playerSelection + " | " + "Computer: " + computerSelection + ". " + result);
+                    playerScore++;
+                } else {
+                    result = "You lose the round!";
+                    console.log("You: " + playerSelection + " | " + "Computer: " + computerSelection + ". " + result);
+                    computerScore++;
+                }
+                break;
         }
     }
 
-    console.log("Player choice: " + capitalizeFirstLetter(playerChoice) + " | " + "Computer choice: " + capitalizeFirstLetter(computerChoice) + " | " + result);
-
-    /*
-    //Displaying the result of each round.
-    playerDisplay.textContent = `PLAYER: ${playerChoice}`;
-    computerDisplay.textContent = `COMPUTER: ${computerChoice}`;
-    resultDisplay.textContent = result;
-    */
-
+    //console.log(result + " | Player choice: " + capitalizeFirstLetter(playerSelection) + " | " + "Computer choice: " + capitalizeFirstLetter(computerSelection) + " | " + " Player Score: " + playerScore + " | " + "Computer Score: " + computerScore);
+    //console.log(typeof(playerSelection) + " " + typeof(computerSelection));
 }
 
 // Checking that the external javascript file is successfully linked. 
@@ -84,3 +145,8 @@ console.log("Hello World!");
 console.log("You have to specify the relative path file for an externally linked js file, such as the ./ abbreviation, where the dot represents current directory!");
 //Ahh, you live and you learn. 
 
+//Step 4: keeping score
+
+
+
+//Step 5: write logic for playing a single round of the game
