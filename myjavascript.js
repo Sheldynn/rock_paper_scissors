@@ -35,10 +35,6 @@ via the Console. It will:
         }
 
 
-
-//Here is  a simpler version of writing the playGame function that I found
-//on a YouTube tutorial. God this makes so much more sense...Lol
-
 // Get computer choice, randomly
 const choices = ["rock", "paper", "scissors"]; //using and array makes sense here for the randomNumber function.
 
