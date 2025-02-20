@@ -17,9 +17,9 @@ via the Console. It will:
  const resultDisplay = document.getElementById("resultDisplay");
 
 // Get computer choice randomly using an array.
-const choices = ["rock", "paper", "scissors"]; //using and array makes sense here for the randomNumber function.
 
 function getComputerChoice(choice) {
+    const choices = ["rock", "paper", "scissors"]; //using and array makes sense here for the randomNumber function.
     const computerChoice = choices[Math.floor(Math.random() * 3)];
     return computerChoice;
 
